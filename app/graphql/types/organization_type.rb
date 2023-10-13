@@ -11,6 +11,8 @@ module Types
     field :city, String
     field :state, String
     field :zip, String
+    field :latitude, Float
+    field :longitude, Float
     field :share_address, Boolean
     field :share_phone, Boolean
     field :share_email, Boolean
