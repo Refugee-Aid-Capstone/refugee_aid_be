@@ -9,6 +9,8 @@ class CreateOrganizations < ActiveRecord::Migration[7.0]
       t.string :city
       t.string :state
       t.string :zip
+      t.float :latitude
+      t.float :longitude
       t.boolean :share_address
       t.boolean :share_phone
       t.boolean :share_email
