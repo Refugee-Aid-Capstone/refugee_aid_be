@@ -23,6 +23,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_164101) do
     t.string "city"
     t.string "state"
     t.string "zip"
+    t.float "latitude"
+    t.float "longitude"
     t.boolean "share_address"
     t.boolean "share_phone"
     t.boolean "share_email"
