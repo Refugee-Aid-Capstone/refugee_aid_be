@@ -21,11 +21,21 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
+    field :organization, Types::OrganizationType, null: false do
+      argument :id, ID
+    end
+
+    def organization(id:)
+      Organization.find(id)
+    end
+
+    field :organizations, [Types::OrganizationType], null: false do
+      argument :city, String 
+      argument :state, String
+    end
+
+    def organizations(city:, state:)
+      Organization.where("city ILIKE ? AND state ILIKE ?", "%#{city}%", "%#{state}%")
     end
   end
 end
