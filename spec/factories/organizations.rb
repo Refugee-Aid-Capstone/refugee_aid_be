@@ -8,6 +8,8 @@ FactoryBot.define do
     city { "MyString" }
     state { "MyString" }
     zip { "MyString" }
+    latitude { 1.2456 }
+    longitude { 2.4564 }
     share_address { false }
     share_phone { false }
     share_email { false }
