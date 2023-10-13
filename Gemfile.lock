@@ -95,7 +95,8 @@ GEM
     graphiql-rails (1.9.0)
       railties
       sprockets-rails
-    graphql-ruby (9001.0)
+    graphql (2.1.3)
+      racc (~> 1.4)
     hashdiff (1.0.1)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
@@ -239,7 +240,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   graphiql-rails
-  graphql-ruby
+  graphql
   pg (~> 1.1)
   pry
   puma (~> 6.4)
