@@ -1,0 +1,14 @@
+{
+  "stack": "heroku-20",
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "bundle exec rspec"
+      },
+      "addons": ["heroku-postgresql:in-dyno"]
+    }
+  },
+  "buildpacks": [
+    { "url": "heroku/ruby" }
+  ]
+}
