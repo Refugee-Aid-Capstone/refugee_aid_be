@@ -197,7 +197,7 @@ long_max_range = 0.37
   city, state = cities_and_states.sample
   name = refugee_shelter_names.sample
   coordinates = coordinates_by_city_state["#{city}, #{state}"]
-  random_lat = rand(lat_min_range..lat_max_range)
-  random_lon = rand(long_min_range..long_max_range)
+  random_lat = rand(lat_min_range..lat_max_range) + coordinates[0]
+  random_lon = rand(long_min_range..long_max_range) + coordinates[1]
   FactoryBot.create(:organization, name: name, city: city, state: state, latitude: random_lat, longitude: random_lon)
 end
