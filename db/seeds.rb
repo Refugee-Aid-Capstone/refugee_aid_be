@@ -139,5 +139,7 @@ long_max_range = 0.37
   coordinates = coordinates_by_city_state["#{city}, #{state}"]
   random_lat = rand(lat_min_range..lat_max_range)
   random_lon = rand(long_min_range..long_max_range)
-  FactoryBot.create(:organization, city: city, state: state, latitude: random_lat, longitude: random_lon)
+  latitude = coordinates.first + random_lat
+  longitude = coordinates.last + random_lon
+  FactoryBot.create(:organization, city: city, state: state, latitude: latitude, longitude: longitude)
 end
