@@ -1,5 +1,6 @@
 class AidRequest < ApplicationRecord
   belongs_to :organization
+  validates :aid_type, :description, :status, presence: true
 
-  enum aid_type: [:medical, :food, :shelter, :other]
+  enum status: [:active, :pending, :fulfilled]
 end
