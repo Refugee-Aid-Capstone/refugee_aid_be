@@ -64,6 +64,65 @@ cities_and_states = [
   ["Cleveland", "OH"]
 ]
 
+refugee_shelter_names = [
+  "Safe Haven Refuge",
+  "Hopeful Haven Shelter",
+  "Harbor of Safety",
+  "Rescue Refuge Center",
+  "New Beginnings Shelter",
+  "Warmth and Welcome Shelter",
+  "Pathway to Peace Refuge",
+  "Compassion Corner",
+  "Emerald Oasis Shelter",
+  "Healing Hearts Haven",
+  "Solace Shelter",
+  "Bridge to Belonging",
+  "Sunrise Sanctuary",
+  "Unity Refuge Center",
+  "Caring Haven",
+  "Serenity Shelter",
+  "Community Compass Shelter",
+  "Harmony Haven",
+  "Sunny Days Refuge",
+  "Lighthouse of Hope",
+  "Angel's Arms Shelter",
+  "Life Renewal Refuge",
+  "Comfort Cove Shelter",
+  "Refugee Empowerment Center",
+  "Graceful Shelter",
+  "Tranquil Oasis",
+  "Dream Safe Haven",
+  "Shelter from the Storm",
+  "Open Arms Refuge",
+  "Heavenly Harbor",
+  "Empathy Haven",
+  "Journey to Belonging",
+  "Heartwarming Shelter",
+  "Sanctuary of Dreams",
+  "Beloved Shelter",
+  "Recovery Refuge",
+  "Hope Bridge Shelter",
+  "Peaceful Pathway Shelter",
+  "Warm Embrace Refuge",
+  "Safe Passage Shelter",
+  "Sheltered Serenity",
+  "Benevolent Refuge",
+  "Radiant Retreat Shelter",
+  "Hearts United Haven",
+  "Companionship Refuge",
+  "Golden Oasis Shelter",
+  "Welcome Winds Refuge",
+  "Guiding Light Shelter",
+  "Promise of Tomorrow Refuge",
+  "Homecoming Haven",
+  "Bridges of Hope Shelter",
+  "Whispering Pines Refuge",
+  "New Horizons Shelter",
+  "Strength in Unity Haven",
+  "Sheltered Hearts Sanctuary",
+  "Cherished Dreams Refuge"
+]
+
 coordinates_by_city_state = {
   "New York City, NY"=>[40.7127281, -74.0060152],
   "Los Angeles, CA"=>[34.0536909, -118.242766],
@@ -136,8 +195,9 @@ long_max_range = 0.37
 
 1000.times do
   city, state = cities_and_states.sample
+  name = refugee_shelter_names.sample
   coordinates = coordinates_by_city_state["#{city}, #{state}"]
   random_lat = rand(lat_min_range..lat_max_range)
   random_lon = rand(long_min_range..long_max_range)
-  FactoryBot.create(:organization, city: city, state: state, latitude: random_lat, longitude: random_lon)
+  FactoryBot.create(:organization, name: name, city: city, state: state, latitude: random_lat, longitude: random_lon)
 end
