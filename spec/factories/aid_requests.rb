@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :aid_request do
     organization
-    aid_type { AidRequest.aid_types.keys.sample.to_sym }
-    language { "Arabic" }
-    description { "MyText" }
-    status { AidRequest.statuses.keys.sample.to_sym }
+    aid_type { AidRequest.aid_types.keys.sample }
+    language { Faker::Nation.language }
+    description { Faker::Lorem.sentence }
+    status { AidRequest.statuses.keys.sample }
   end
 end
