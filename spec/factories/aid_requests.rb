@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :aid_request do
     organization
-    aid_type { "MyString" }
-    language { "MyString" }
+    aid_type { "language" }
+    language { "Arabic" }
     description { "MyText" }
-    status { "MyString" }
+    status { "active" }
   end
 end
