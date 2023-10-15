@@ -3,8 +3,8 @@ require 'csv'
 
 RSpec.describe "This test" do
   it "generates aidanization/AidRequest CSV data and is not a test lol" do
-    
-    # Skipping the test is bleh. This way we will still get that sweet,sweet green dot!
+    # CSV's generated and located in the db/data dir
+    # Skipping the test is bleh. But this way we will still get that sweet,sweet green dot (fro an "empty" test lol)!
 
 =begin
     organizations = 1000.times.map do
