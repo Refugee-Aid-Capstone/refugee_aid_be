@@ -15,12 +15,12 @@ FactoryBot.define do
     share_email { Faker::Boolean.boolean }
   end
 
-  after :build do |org|
-    shared = [
-    org.share_address,
-    org.share_phone,
-    org.share_email
-  ]
-    org.share_email = true if shared.none? {|share| share == true}
-  end
+  # after :build do |org|
+  #   shared = [
+  #   org.share_address,
+  #   org.share_phone,
+  #   org.share_email
+  # ]
+  #   org.share_email = true if shared.none? {|share| share == true}
+  # end
 end

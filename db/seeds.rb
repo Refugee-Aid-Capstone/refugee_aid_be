@@ -9,6 +9,7 @@ require 'factory_bot'
 require 'geocoder'
 require 'faker'
 
+AidRequest.destroy_all
 Organization.destroy_all
 
 cities_and_states = [
@@ -201,3 +202,10 @@ long_max_range = 0.37
   random_lon = rand(long_min_range..long_max_range) + coordinates[1]
   FactoryBot.create(:organization, name: name, city: city, state: state, latitude: random_lat, longitude: random_lon)
 end
+
+ids = Organization.all.pluck(:id)
+
+3000.times do 
+  FactoryBot.create(:aid_request, organization_id: ids.sample)
+end
+
