@@ -10,8 +10,8 @@ FactoryBot.define do
     zip { Faker::Address.zip_code }
     latitude { Faker::Address.latitude }
     longitude { Faker::Address.longitude }
-    share_address { Faker::Boolean.boolean }
-    share_phone { Faker::Boolean.boolean }
+    share_address { true }
+    share_phone { true }
     share_email { true }
   end
 end
