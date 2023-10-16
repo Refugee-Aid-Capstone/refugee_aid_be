@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_14_214125) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_15_200337) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "aid_requests", force: :cascade do |t|
     t.bigint "organization_id", null: false
-    t.string "aid_type"
+    t.integer "aid_type"
     t.string "language"
-    t.text "description"
-    t.string "status", default: "active"
+    t.string "description"
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_aid_requests_on_organization_id"
