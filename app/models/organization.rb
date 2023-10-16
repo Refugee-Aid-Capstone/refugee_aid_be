@@ -11,7 +11,10 @@ class Organization < ApplicationRecord
             :zip,
             :latitude,
             :longitude,
-            :share_address,
+            presence: :true
+
+  validates :share_address,
             :share_phone,
-            :share_email, presence: :true
+            :share_email,
+            inclusion: [true,false]
 end
