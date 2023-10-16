@@ -15,7 +15,7 @@ RSpec.describe "Organization Query" do
 
   describe "Happy Path" do
     it "returns one Organization by ID" do
-      result = RefugeeAidBeSchema.execute(get_one_query, variables: { id: @org_1.id})
+      result = RefugeeAidBeSchema.execute(get_one_organization_query, variables: { id: @org_1.id})
       response = result["data"]["organization"]
       
       expect(response).to have_key("name")
@@ -81,7 +81,7 @@ RSpec.describe "Organization Query" do
     end
   end
 
-  def get_one_query
+  def get_one_organization_query
     <<-GRAPHQL
       query getOneOrg($id: ID!){
         organization(id: $id) {
