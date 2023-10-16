@@ -11,11 +11,13 @@ RSpec.describe "Organization Query" do
     2.times do
       create(:aid_request, organization: @org_2)
     end
+
+    @orgs = create_list(:organization, 5, city: "Denver", state: "CO")
   end
 
   describe "Happy Path" do
     it "returns one Organization by ID" do
-      result = RefugeeAidBeSchema.execute(get_one_organization_query, variables: { id: @org_1.id})
+      result = RefugeeAidBeSchema.execute(get_one_organization_query, variables: { id: @org_1.id })
       response = result["data"]["organization"]
       
       expect(response).to have_key("name")
@@ -79,6 +81,58 @@ RSpec.describe "Organization Query" do
         expect(aid_request["status"]).to be_a(String)
       end
     end
+
+    it "returns one Organization by ID" do
+      result = RefugeeAidBeSchema.execute(get_organizations_by_city_state, variables: { city: "Denver", state: "CO" })
+      response = result["data"]["organizations"]
+      
+      response.each do |organization|
+        expect(organization).to have_key("id")
+        expect(organization["id"]).to be_a(String)
+
+        expect(organization).to have_key("name")
+        expect(organization["name"]).to be_a(String)
+
+        expect(organization).to have_key("contactPhone")
+        expect(organization["contactPhone"]).to be_a(String)
+
+        expect(organization).to have_key("contactEmail")
+        expect(organization["contactEmail"]).to be_a(String)
+
+        expect(organization).to have_key("streetAddress")
+        expect(organization["streetAddress"]).to be_a(String)
+
+        expect(organization).to have_key("website")
+        expect(organization["website"]).to be_a(String)
+
+        expect(organization).to have_key("city")
+        expect(organization["city"]).to be_a(String)
+
+        expect(organization).to have_key("state")
+        expect(organization["state"]).to be_a(String)
+
+        expect(organization).to have_key("zip")
+        expect(organization["zip"]).to be_a(String)
+        
+        expect(organization).to have_key("latitude")
+        expect(organization["latitude"]).to be_a(Float)
+
+        expect(organization).to have_key("longitude")
+        expect(organization["longitude"]).to be_a(Float)
+
+        expect(organization).to have_key("shareAddress")
+        expect(organization["shareAddress"]).to be_in([true, false])
+
+        expect(organization).to have_key("sharePhone")
+        expect(organization["sharePhone"]).to be_in([true, false])
+
+        expect(organization).to have_key("shareEmail")
+        expect(organization["shareEmail"]).to be_in([true, false])
+        
+        expect(organization).to have_key("aidRequests")
+        expect(organization["aidRequests"]).to be_a(Array)
+      end
+    end
   end
 
   def get_one_organization_query
@@ -107,11 +161,45 @@ RSpec.describe "Organization Query" do
             description
             status
             organization {
-                name
+              name
             }
           }
         }
       }
-      GRAPHQL
+    GRAPHQL
+  end
+
+  def get_organizations_by_city_state
+    <<-GRAPHQL
+      query getAllOrgs($city: String!, $state: String!) {
+        organizations(city: $city, state: $state) {
+          id
+          name
+          contactPhone
+          contactEmail
+          streetAddress
+          website
+          city
+          state
+          zip
+          latitude
+          longitude
+          shareAddress
+          sharePhone
+          shareEmail
+          aidRequests {
+            id
+            organizationId
+            aidType
+            language
+            description
+            status
+            organization {
+              name
+            }
+          }
+        }
+      }
+    GRAPHQL
   end
 end
