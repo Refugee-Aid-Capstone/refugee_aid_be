@@ -1,46 +1,21 @@
 require 'rails_helper'
 
-RSpec.describe "Query Types", type: :request do
+RSpec.describe "Query Types" do
+  before do
+    @org_1 = create(:organization)
+    3.times do
+      create(:aid_request, organization: @org_1)
+    end
+
+    @org_2 = create(:organization)
+    2.times do
+      create(:aid_request, organization: @org_2)
+    end
+  end
+
   describe "Organization" do
     it "returns one Organization by ID" do
-      query_string = <<-GRAPHQL
-      query getOneOrg($id: ID!){
-        organization(id: $id) {
-          id
-          name
-          contactPhone
-          contactEmail
-          streetAddress
-          website
-          city
-          state
-          zip
-          latitude
-          longitude
-          shareAddress
-          sharePhone
-          shareEmail
-          aidRequests {
-            id
-            organizationId
-            aidType
-            language
-            description
-            status
-            organization {
-                name
-            }
-          }
-        }
-      }
-      GRAPHQL
-
-      org = create(:organization)
-      3.times do
-        create(:aid_request, organization: org)
-      end
-
-      result = RefugeeAidBeSchema.execute(query_string, variables: { id: org.id})
+      result = RefugeeAidBeSchema.execute(get_one_query, variables: { id: @org_1.id})
       response = result["data"]["organization"]
       
       expect(response).to have_key("name")
@@ -81,6 +56,43 @@ RSpec.describe "Query Types", type: :request do
 
       expect(response).to have_key("shareEmail")
       expect(response["shareEmail"]).to be_in([true, false])
+
+      expect(response).to have_key("aidRequests")
+      response
     end
+  end
+
+  def get_one_query
+    <<-GRAPHQL
+      query getOneOrg($id: ID!){
+        organization(id: $id) {
+          id
+          name
+          contactPhone
+          contactEmail
+          streetAddress
+          website
+          city
+          state
+          zip
+          latitude
+          longitude
+          shareAddress
+          sharePhone
+          shareEmail
+          aidRequests {
+            id
+            organizationId
+            aidType
+            language
+            description
+            status
+            organization {
+                name
+            }
+          }
+        }
+      }
+      GRAPHQL
   end
 end
