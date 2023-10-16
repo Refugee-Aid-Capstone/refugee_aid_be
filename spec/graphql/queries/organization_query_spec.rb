@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Query Types" do
+RSpec.describe "Organization Query" do
   before do
     @org_1 = create(:organization)
     3.times do
@@ -13,7 +13,7 @@ RSpec.describe "Query Types" do
     end
   end
 
-  describe "Organization" do
+  describe "Happy Path" do
     it "returns one Organization by ID" do
       result = RefugeeAidBeSchema.execute(get_one_query, variables: { id: @org_1.id})
       response = result["data"]["organization"]
@@ -56,9 +56,28 @@ RSpec.describe "Query Types" do
 
       expect(response).to have_key("shareEmail")
       expect(response["shareEmail"]).to be_in([true, false])
-
+      
       expect(response).to have_key("aidRequests")
-      response
+      expect(response["aidRequests"]).to be_a(Array)
+      response["aidRequests"].each do |aid_request|
+        expect(aid_request).to have_key("id")
+        expect(aid_request["id"]).to be_a(String)
+
+        expect(aid_request).to have_key("organizationId")
+        expect(aid_request["organizationId"]).to be_a(Integer)
+
+        expect(aid_request).to have_key("aidType")
+        expect(aid_request["aidType"]).to be_a(String)
+
+        expect(aid_request).to have_key("language")
+        expect(aid_request["language"]).to be_a(String)
+
+        expect(aid_request).to have_key("description")
+        expect(aid_request["description"]).to be_a(String)
+
+        expect(aid_request).to have_key("status")
+        expect(aid_request["status"]).to be_a(String)
+      end
     end
   end
 
