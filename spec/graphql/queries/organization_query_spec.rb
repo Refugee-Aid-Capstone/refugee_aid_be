@@ -68,7 +68,7 @@ RSpec.describe "Organization Query" do
       end
     end
 
-    it "returns one Organization by ID" do
+    it "returns Organizations by city and state" do
       result = RefugeeAidBeSchema.execute(get_organizations_by_city_state, variables: { city: "Denver", state: "CO" })
       response = result["data"]["organizations"]
       
