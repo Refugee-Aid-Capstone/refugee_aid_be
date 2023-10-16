@@ -178,7 +178,7 @@ Column 2
 
 ## :people_holding_hands: Authors
 
-**Wutz** is a student project built in September, 2023 for the Backend Program of the [Turing School of Software and Design](https://turing.edu/).
+**Refugee Aid** is a student project built in October, 2023 for the Backend Program of the [Turing School of Software and Design](https://turing.edu/).
 
 ### Back End Team
 - **Ethan Black** ([Github](https://github.com/ethanrossblack) • [LinkedIn](https://www.linkedin.com/in/ethanrossblack/))
