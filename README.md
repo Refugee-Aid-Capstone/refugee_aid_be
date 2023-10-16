@@ -28,24 +28,25 @@ bundle exec rspec
 
 ---
 
-## :question: GraphQL Documentation
+## ✍️ GraphQL Queries
 
-### Queries
-- [`organization`](#organization-query)
-- [`organizations`](#organizations-query)
-- [`aidRequests`](#aidrequests-query)
-
----
-#### `organization` Query
+### `organization`
 
 Returns details from a single `Organization` using its unique `id`.
 
-***Examples***
-
-<details>
-<summary>
-✍️ Query (<code>organization</code>)
-</summary>
+<table align="center">
+<tr>
+<th width="500px">
+<small>✍️ Example Query</small>
+</th>
+<th width="500px">
+<small>
+🧩 Example Variables
+</small>
+</th>
+</tr>
+<tr>
+<td>
   
 ```graphql
 query ($id: ID!) {
@@ -75,25 +76,30 @@ query ($id: ID!) {
   }
 }
 ```
-</details>
 
-<details>
-<summary>
-🧩 Variables (<code>organization</code>)
-</summary>
-  
+</td>
+<td>
+
 ```json
 {
   "id": 2
 }
 ```
-</details>
-
+</td>
+</tr>
+<tr>
+<th colspan="2">
+📦 <b>Example Response</b>
+</th>
+</tr>
+<tr>
+<td colspan="2">
 <details>
 <summary>
-📦 Response (<code>organization</code>)
+🟢 Status <code>200</code> : Successful Response
 </summary>
-
+<br>
+  
 ```json
 {
   "data": {
@@ -149,22 +155,31 @@ query ($id: ID!) {
     }
   }
 }
-
 ```
 </details>
+</td>
+</tr>
+</table>
 
------
+---
 
-#### `organizations` Query
+### `organizations`
 
 Returns all `organizations` operating within the provided `city` and `state`.
 
-***Examples***
-
-<details>
-<summary>
-✍️ Query (<code>organizations</code>)
-</summary>
+<table align="center">
+<tr>
+<th width="500px">
+<small>✍️ Example Query</small>
+</th>
+<th width="500px">
+<small>
+🧩 Example Variables
+</small>
+</th>
+</tr>
+<tr>
+<td>
   
 ```graphql
 query ($city: String!, $state: String!) {
@@ -184,26 +199,30 @@ query ($city: String!, $state: String!) {
   }
 }
 ```
-</details>
+</td>
+<td>
 
-<details>
-<summary>
-🧩 Variables (<code>organizations</code>)
-</summary>
-  
 ```json
 {
   "city": "Denver",
   "state": "CO"
 }
 ```
-</details>
-
+</td>
+</tr>
+<tr>
+<th colspan="2">
+📦 <b>Example Response</b>
+</th>
+</tr>
+<tr>
+<td colspan="2">
 <details>
 <summary>
-📦 Response (<code>organizations</code>)
+🟢 Status <code>200</code> : Successful Response
 </summary>
-
+<br>
+  
 ```json
 {
   "data": {
@@ -268,19 +287,31 @@ query ($city: String!, $state: String!) {
 
 ```
 </details>
+</td>
+</tr>
+</table>
 
------
+---
 
-#### `aidRequests` Query
+### `aidRequests`
 
 Returns all `aidRequests` from a provided `city` and `state`.
 
 ***Examples***
 
-<details>
-<summary>
-✍️ Query (<code>aidRequests</code>)
-</summary>
+<table align="center">
+<tr>
+<th width="500px">
+<small>✍️ Example Query</small>
+</th>
+<th width="500px">
+<small>
+🧩 Example Variables
+</small>
+</th>
+</tr>
+<tr>
+<td>
   
 ```graphql
 query ($city: String!, $state: String!) {
@@ -298,26 +329,30 @@ query ($city: String!, $state: String!) {
   }
 }
 ```
-</details>
+</td>
+<td>
 
-<details>
-<summary>
-🧩 Variables (<code>aidRequests</code>)
-</summary>
-  
 ```json
 {
   "city": "Denver",
   "state": "CO"
 }
 ```
-</details>
-
+</td>
+</tr>
+<tr>
+<th colspan="2">
+📦 <b>Example Response</b>
+</th>
+</tr>
+<tr>
+<td colspan="2">
 <details>
 <summary>
-📦 Response (<code>aidRequests</code>)
+🟢 Status <code>200</code> : Successful Response
 </summary>
-
+<br>
+  
 ```json
 {
   "data": {
@@ -362,13 +397,15 @@ query ($city: String!, $state: String!) {
     ]
   }
 }
-
 ```
 </details>
+</td>
+</tr>
+</table>
 
------
 
-### Types
+
+## Types
 
 | Types | Description |
 | --- | ---|
