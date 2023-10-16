@@ -59,3 +59,6 @@ group :development do
   gem "graphiql-rails"
 end
 
+group :test do
+  gem 'rspec-graphql_matchers'
+end
