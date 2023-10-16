@@ -230,10 +230,91 @@ RSpec.configure do |config|
       "Arlington, TX"=>[32.7355816, -97.1071186],
       "Cleveland, OH"=>[41.4996574, -81.6936772]
     }
+
     @lat_min_range = -0.29
     @lat_max_range = 0.29
     @long_min_range = -0.37
     @long_max_range = 0.37
+
+    def get_one_organization_query
+      <<-GRAPHQL
+        query getOneOrg($id: ID!){
+          organization(id: $id) {
+            id
+            name
+            contactPhone
+            contactEmail
+            streetAddress
+            website
+            city
+            state
+            zip
+            latitude
+            longitude
+            shareAddress
+            sharePhone
+            shareEmail
+            aidRequests {
+              id
+              organizationId
+              aidType
+              language
+              description
+              status
+              organization {
+                name
+              }
+            }
+          }
+        }
+      GRAPHQL
+    end
+  
+    def get_organizations_by_city_state
+      <<-GRAPHQL
+        query getAllOrgs($city: String!, $state: String!) {
+          organizations(city: $city, state: $state) {
+            id
+            name
+            contactPhone
+            contactEmail
+            streetAddress
+            website
+            city
+            state
+            zip
+            latitude
+            longitude
+            shareAddress
+            sharePhone
+            shareEmail
+            aidRequests {
+              id
+              organizationId
+              aidType
+              language
+              description
+              status
+              organization {
+                name
+              }
+            }
+          }
+        }
+      GRAPHQL
+    end
+
+    @org_1 = create(:organization)
+    3.times do
+      create(:aid_request, organization: @org_1)
+    end
+
+    @org_2 = create(:organization)
+    2.times do
+      create(:aid_request, organization: @org_2)
+    end
+
+    @orgs = create_list(:organization, 5, city: "Denver", state: "CO")
   end
 end
 

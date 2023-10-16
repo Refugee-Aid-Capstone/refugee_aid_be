@@ -1,20 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Organization Query" do
-  before do
-    @org_1 = create(:organization)
-    3.times do
-      create(:aid_request, organization: @org_1)
-    end
-
-    @org_2 = create(:organization)
-    2.times do
-      create(:aid_request, organization: @org_2)
-    end
-
-    @orgs = create_list(:organization, 5, city: "Denver", state: "CO")
-  end
-
   describe "Happy Path" do
     it "returns one Organization by ID" do
       result = RefugeeAidBeSchema.execute(get_one_organization_query, variables: { id: @org_1.id })
@@ -133,73 +119,5 @@ RSpec.describe "Organization Query" do
         expect(organization["aidRequests"]).to be_a(Array)
       end
     end
-  end
-
-  def get_one_organization_query
-    <<-GRAPHQL
-      query getOneOrg($id: ID!){
-        organization(id: $id) {
-          id
-          name
-          contactPhone
-          contactEmail
-          streetAddress
-          website
-          city
-          state
-          zip
-          latitude
-          longitude
-          shareAddress
-          sharePhone
-          shareEmail
-          aidRequests {
-            id
-            organizationId
-            aidType
-            language
-            description
-            status
-            organization {
-              name
-            }
-          }
-        }
-      }
-    GRAPHQL
-  end
-
-  def get_organizations_by_city_state
-    <<-GRAPHQL
-      query getAllOrgs($city: String!, $state: String!) {
-        organizations(city: $city, state: $state) {
-          id
-          name
-          contactPhone
-          contactEmail
-          streetAddress
-          website
-          city
-          state
-          zip
-          latitude
-          longitude
-          shareAddress
-          sharePhone
-          shareEmail
-          aidRequests {
-            id
-            organizationId
-            aidType
-            language
-            description
-            status
-            organization {
-              name
-            }
-          }
-        }
-      }
-    GRAPHQL
   end
 end
