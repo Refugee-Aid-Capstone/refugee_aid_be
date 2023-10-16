@@ -18,7 +18,7 @@ coordinates_by_city_state = Hash.new
 =end
 
 CSV.foreach('db/data/organizations_gen.csv', headers: true) do |row|
-    Organization.create!(
+    Organization.create(
       name: row["name"],
       contact_phone: row["contact_phone"],
       contact_email: row["contact_email"],
@@ -38,7 +38,7 @@ end
 puts "Organizations CSV loaded successfully."
 
 CSV.foreach('db/data/aid_requests_gen.csv', headers: true) do |row|
-  AidRequest.create!(
+  AidRequest.create(
     organization_id: row["organization_id"],
     aid_type: row["aid_type"],
     language: row["language"],
