@@ -3,7 +3,11 @@
 Refugee Aid is an app that connects citizens in the United States with refugee aid organizations and camps.
 
 ## :clipboard: Table of Contents
-[:hammer: Installation](#hammer-installation) | [:question: GraphQL Queries](#question-graphql-queries) | [:people_holding_hands: Authors](#people_holding_hands-authors)
+- [:hammer: Installation](#hammer-installation)
+- [:question: GraphQL Documentation](#question-graphql-documentation)
+  - [Queries](#queries)
+  - [Types](#types)
+- [:people_holding_hands: Authors](#people_holding_hands-authors)
 
 ## :hammer: Installation
 
@@ -24,7 +28,384 @@ bundle exec rspec
 
 ---
 
-## :question: GraphQL Queries
+## ✍️ GraphQL Queries
+
+### `organization`
+
+Returns details from a single `Organization` using its unique `id`.
+
+<table align="center">
+<tr>
+<th width="500px">
+<small>✍️ Example Query</small>
+</th>
+<th width="500px">
+<small>
+🧩 Example Variables
+</small>
+</th>
+</tr>
+<tr>
+<td>
+  
+```graphql
+query ($id: ID!) {
+  organization(id: $id) {
+    id
+    name
+    contactPhone
+    contactEmail
+    streetAddress
+    website
+    city
+    state
+    zip
+    latitude
+    longitude
+    shareAddress
+    sharePhone
+    shareEmail
+    aidRequests {
+      id
+      organizationId
+      aidType
+      language
+      description
+      status
+    }
+  }
+}
+```
+
+</td>
+<td>
+
+```json
+{
+  "id": 2
+}
+```
+</td>
+</tr>
+<tr>
+<th colspan="2">
+📦 <b>Example Response</b>
+</th>
+</tr>
+<tr>
+<td colspan="2">
+<details>
+<summary>
+🟢 Status <code>200</code> : Successful Response
+</summary>
+<br>
+  
+```json
+{
+  "data": {
+    "organization": {
+      "id": "2",
+      "name": "Dream Safe Haven",
+      "contactPhone": "1-676-635-1273",
+      "contactEmail": "breann.erdman@watsica-durgan.example",
+      "streetAddress": "85946 Miller Burg",
+      "website": "http://heaney.test/almeta",
+      "city": "Philadelphia",
+      "state": "PA",
+      "zip": "07501-9726",
+      "latitude": 40.16353072947562,
+      "longitude": -75.29320837398994,
+      "shareAddress": true,
+      "sharePhone": true,
+      "shareEmail": true,
+      "aidRequests": [
+        {
+          "id": "393",
+          "organizationId": 2,
+          "aidType": "language",
+          "language": "Javanese",
+          "description": "Dolorem vero maxime quisquam.",
+          "status": "pending"
+        },
+        {
+          "id": "891",
+          "organizationId": 2,
+          "aidType": "legal",
+          "language": "Tagalog",
+          "description": "Quo et voluptas amet.",
+          "status": "active"
+        },
+        {
+          "id": "1006",
+          "organizationId": 2,
+          "aidType": "language",
+          "language": "Romanian",
+          "description": "Ea ut qui quos.",
+          "status": "active"
+        },
+        {
+          "id": "2350",
+          "organizationId": 2,
+          "aidType": "medical",
+          "language": "Tagalog",
+          "description": "Molestiae cumque quisquam quis.",
+          "status": "active"
+        }
+      ]
+    }
+  }
+}
+```
+</details>
+</td>
+</tr>
+</table>
+
+---
+
+### `organizations`
+
+Returns all `organizations` operating within the provided `city` and `state`.
+
+<table align="center">
+<tr>
+<th width="500px">
+<small>✍️ Example Query</small>
+</th>
+<th width="500px">
+<small>
+🧩 Example Variables
+</small>
+</th>
+</tr>
+<tr>
+<td>
+  
+```graphql
+query ($city: String!, $state: String!) {
+  organizations(city: $city, state: $state) {
+    id
+    name
+    city
+    state
+    website
+    aidRequests {
+      id
+      aidType
+      language
+      description
+      status
+    }
+  }
+}
+```
+</td>
+<td>
+
+```json
+{
+  "city": "Denver",
+  "state": "CO"
+}
+```
+</td>
+</tr>
+<tr>
+<th colspan="2">
+📦 <b>Example Response</b>
+</th>
+</tr>
+<tr>
+<td colspan="2">
+<details>
+<summary>
+🟢 Status <code>200</code> : Successful Response
+</summary>
+<br>
+  
+```json
+{
+  "data": {
+    "organizations": [
+      {
+        "id": "63",
+        "name": "Emerald Oasis Shelter",
+        "city": "Denver",
+        "state": "CO",
+        "website": "http://kub-larkin.test/ramon",
+        "aidRequests": [
+          {
+            "id": "2181",
+            "aidType": "other",
+            "language": "Hindi",
+            "description": "Labore dignissimos deleniti nam.",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": "97",
+        "name": "Life Renewal Refuge",
+        "city": "Denver",
+        "state": "CO",
+        "website": "http://stroman-paucek.example/claudette",
+        "aidRequests": [
+          {
+            "id": "281",
+            "aidType": "other",
+            "language": "Romanian",
+            "description": "Culpa voluptas dolor accusantium.",
+            "status": "pending"
+          },
+          {
+            "id": "1333",
+            "aidType": "legal",
+            "language": "Marathi",
+            "description": "Voluptatibus et consequatur laudantium.",
+            "status": "active"
+          },
+          {
+            "id": "1527",
+            "aidType": "legal",
+            "language": "Tagalog",
+            "description": "Eos earum nihil commodi.",
+            "status": "fulfilled"
+          },
+          {
+            "id": "2993",
+            "aidType": "language",
+            "language": "Arabic",
+            "description": "Modi dolores enim molestiae.",
+            "status": "fulfilled"
+          }
+        ]
+      },
+      ...
+    ]
+  }
+}
+
+```
+</details>
+</td>
+</tr>
+</table>
+
+---
+
+### `aidRequests`
+
+Returns all `aidRequests` from a provided `city` and `state`.
+
+***Examples***
+
+<table align="center">
+<tr>
+<th width="500px">
+<small>✍️ Example Query</small>
+</th>
+<th width="500px">
+<small>
+🧩 Example Variables
+</small>
+</th>
+</tr>
+<tr>
+<td>
+  
+```graphql
+query ($city: String!, $state: String!) {
+  aidRequests(city: $city, state: $state) {
+    id
+    aidType
+    language
+    description
+    status
+    organization {
+      name
+      city
+      state
+    }
+  }
+}
+```
+</td>
+<td>
+
+```json
+{
+  "city": "Denver",
+  "state": "CO"
+}
+```
+</td>
+</tr>
+<tr>
+<th colspan="2">
+📦 <b>Example Response</b>
+</th>
+</tr>
+<tr>
+<td colspan="2">
+<details>
+<summary>
+🟢 Status <code>200</code> : Successful Response
+</summary>
+<br>
+  
+```json
+{
+  "data": {
+    "aidRequests": [
+      {
+        "id": "2181",
+        "aidType": "other",
+        "language": "Hindi",
+        "description": "Labore dignissimos deleniti nam.",
+        "status": "pending",
+        "organization": {
+          "name": "Emerald Oasis Shelter",
+          "city": "Denver",
+          "state": "CO"
+        }
+      },
+      {
+        "id": "281",
+        "aidType": "other",
+        "language": "Romanian",
+        "description": "Culpa voluptas dolor accusantium.",
+        "status": "pending",
+        "organization": {
+          "name": "Life Renewal Refuge",
+          "city": "Denver",
+          "state": "CO"
+        }
+      },
+      {
+        "id": "1333",
+        "aidType": "legal",
+        "language": "Marathi",
+        "description": "Voluptatibus et consequatur laudantium.",
+        "status": "active",
+        "organization": {
+          "name": "Life Renewal Refuge",
+          "city": "Denver",
+          "state": "CO"
+        }
+      },
+      ...
+    ]
+  }
+}
+```
+</details>
+</td>
+</tr>
+</table>
+
+
+
+## Types
 
 | Types | Description |
 | --- | ---|
@@ -68,113 +449,6 @@ type AidRequest {
 }
 ```
 
-
-<table>
-<tr>
-<th width="500px">
-<small>Query</small>
-</th>
-<th width="500px">
-<small>
-Response
-</small>
-</th>
-</tr>
-<tr>
-<td>
-  
-```graphql
-{
-  organization(id: 1) {
-    id                # The organization's ID
-    name              # The name of the organization
-    contactPhone      # A contact phone number
-    contactEmail
-    streetAddress
-    website
-    city
-    state
-    zip
-    latitude
-    longitude
-    shareAddress
-    sharePhone
-    shareEmail
-    aidRequests {
-      id
-      organizationId
-      aidType
-      language
-      description
-      status
-    }
-  }
-}
-```
-
-</td>
-<td>
-
-```json
-{
-  "data": {
-    "organization": {
-      "id": "1",
-      "name": "Welcome Winds Refuge",
-      "contactPhone": "1-347-839-2631",
-      "contactEmail": "mitchel.schmitt@powlowski.test",
-      "streetAddress": "8223 Lou Crest",
-      "website": "http://kemmer.test/carita",
-      "city": "Oklahoma City",
-      "state": "OK",
-      "zip": "49131",
-      "latitude": 35.653564198354196,
-      "longitude": -97.19134672640317,
-      "shareAddress": false,
-      "sharePhone": true,
-      "shareEmail": true,
-      "aidRequests": [
-        {
-          "id": "2000",
-          "organizationId": 1,
-          "aidType": null,
-          "language": "Arabic",
-          "description": "MyText",
-          "status": null
-        },
-        {
-          "id": "2281",
-          "organizationId": 1,
-          "aidType": null,
-          "language": "Arabic",
-          "description": "MyText",
-          "status": null
-        },
-        {
-          "id": "2958",
-          "organizationId": 1,
-          "aidType": null,
-          "language": "Arabic",
-          "description": "MyText",
-          "status": null
-        }
-      ]
-    }
-  }
-}
-```
-  
-</td>
-</tr>
-<tr>
-<td align="center">
-Column 1
-</td>
-<td align="center">
-Column 2
-</td>
-</tr>
-</table>
 
 ## :people_holding_hands: Authors
 
