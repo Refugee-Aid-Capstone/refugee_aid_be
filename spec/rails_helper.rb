@@ -7,6 +7,8 @@ require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+
+require 'coderay'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -304,17 +306,46 @@ RSpec.configure do |config|
       GRAPHQL
     end
 
+    def aid_requests_by_city_state
+      <<-GRAPHQL
+        query ($city: String!, $state: String!) {
+          aidRequests(city: $city, state: $state) {
+            id
+            organizationId
+            aidType
+            language
+            description
+            status
+            organization {
+              name
+              city
+              state
+            }
+          }
+        }
+      GRAPHQL
+    end
+
+    # Create 1 Organization and three associated AidRequests 
     @org_1 = create(:organization)
     3.times do
       create(:aid_request, organization: @org_1)
     end
 
+    # Create 1 Organization and two associated AidRequests 
     @org_2 = create(:organization)
     2.times do
       create(:aid_request, organization: @org_2)
     end
 
+    # Create 5 Organizations based in Denver and 2 AidRequests for each organization, creating a total of 10 confirmed Denver AidRequests.
     @orgs = create_list(:organization, 5, city: "Denver", state: "CO")
+    @orgs.each do |org|
+      2.times do
+        create(:aid_request, organization: org)
+      end
+    end
+
   end
 end
 
