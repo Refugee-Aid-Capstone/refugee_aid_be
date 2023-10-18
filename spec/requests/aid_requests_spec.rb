@@ -3,8 +3,39 @@ require 'rails_helper'
 describe "GraphQL `aidRequest` Query Request" do
   describe "Happy Path" do
     it "returns all AidRequests for a given city and state" do
+      # Create Denver CO test data
+      den_orgs = create_list(:organization, 5, city: "Denver", state: "CO")
+      den_orgs.each do |org|
+        create_list(:aid_request, 2, organization: org)
+      end
+      
+      # Create Aurora CO test data
+      aurora_orgs = create_list(:organization, 2, city: "Aurora", state: "CO")
+      aurora_orgs.each do |org|
+        create_list(:aid_request, 1, organization: org)
+      end
+
+      query = <<-GRAPHQL
+        query ($city: String!, $state: String!) {
+          aidRequests(city: $city, state: $state) {
+            id
+            organizationId
+            aidType
+            language
+            description
+            status
+            organization {
+              name
+              city
+              state
+            }
+          }
+        }
+      GRAPHQL
+
+
       post "/graphql", params: { 
-        query: aid_requests_by_city_state, 
+        query: query, 
         variables: { city: "Denver", state: "CO" } 
       }
 
