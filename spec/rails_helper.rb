@@ -135,15 +135,11 @@ RSpec.configure do |config|
     end
 
     @org_1 = create(:organization)
-    3.times do
-      create(:aid_request, organization: @org_1)
-    end
-
+    @aid_1 = create_list(:aid_request, 3, organization: @org_1)
+    
     @org_2 = create(:organization)
-    2.times do
-      create(:aid_request, organization: @org_2)
-    end
-
+    @aid_1 = create_list(:aid_request, 2, organization: @org_2)
+    
     @orgs = create_list(:organization, 5, city: "Denver", state: "CO")
   end
 end
