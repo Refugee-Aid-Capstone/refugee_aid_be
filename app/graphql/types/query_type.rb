@@ -48,5 +48,11 @@ module Types
     def aid_requests(city:, state:)
       AidRequest.joins(:organization).where("city ILIKE ? AND state ILIKE ?", "%#{city}%", "%#{state}%")
     end
+
+    field :locations, [Types::OrganizationType], null: false
+
+    def locations 
+      Organization.select("city", "state").distinct.order("state", "city")
+    end
   end
 end
