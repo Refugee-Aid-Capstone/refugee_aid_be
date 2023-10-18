@@ -39,6 +39,17 @@ module Types
       Organization.where("city ILIKE ? AND state ILIKE ?", "%#{city}%", "%#{state}%")
     end
 
+    field :organizationsLatLon, [Types::OrganizationType], null: false, description: "Retrieve all organiations within `r` miles of a given lat/lon. The default radius (`r`) is 20 miles." do
+      argument :latitude, Float, description: "A latitude coordinate."
+      argument :longitude, Float, description: "A longitude coordinate." 
+      argument :radius, Integer, required: false, description: "(OPTIONAL) The search radius, in miles, from the provided `latitude` / `longitude`. Default value is 20 miles."
+    end
+
+    def organizationsLatLon(latitude:, longitude:, radius:20)
+      coordinates = [latitude, longitude]
+      Organization.near(coordinates, radius)
+    end
+
     # AidRequests query
     field :aid_requests, [Types::AidRequestType], null: false do
       argument :city, String 
