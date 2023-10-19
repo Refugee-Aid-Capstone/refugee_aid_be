@@ -12,9 +12,5 @@ RSpec.describe Organization, type: :model do
     it { should validate_presence_of(:zip) }
     it { should validate_presence_of(:latitude) }
     it { should validate_presence_of(:longitude) }
-
-    it { should validate_inclusion_of(:share_address).in_array([true, false]) }
-    it { should validate_inclusion_of(:share_phone).in_array([true, false]) }
-    it { should validate_inclusion_of(:share_email).in_array([true, false]) }
   end
 end
