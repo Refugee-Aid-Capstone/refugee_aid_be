@@ -21,7 +21,7 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    #Organization queries
+    # Organization details by ID
     field :organization, Types::OrganizationType, null: false do
       argument :id, ID
     end
@@ -30,6 +30,7 @@ module Types
       Organization.find(id)
     end
 
+    # Organizations for a given city+state
     field :organizations, [Types::OrganizationType], null: false do
       argument :city, String 
       argument :state, String
@@ -50,7 +51,18 @@ module Types
       Organization.near(coordinates, radius)
     end
 
-    # AidRequests query
+    field :organizationsLatLon, [Types::OrganizationType], null: false, description: "Retrieve all organiations within `r` miles of a given lat/lon. The default radius (`r`) is 20 miles." do
+      argument :latitude, Float, description: "A latitude coordinate."
+      argument :longitude, Float, description: "A longitude coordinate." 
+      argument :radius, Integer, required: false, description: "(OPTIONAL) The search radius, in miles, from the provided `latitude` / `longitude`. Default value is 20 miles."
+    end
+
+    def organizationsLatLon(latitude:, longitude:, radius:20)
+      coordinates = [latitude, longitude]
+      Organization.near(coordinates, radius)
+    end
+
+    # AidRequests for a given city+state
     field :aid_requests, [Types::AidRequestType], null: false do
       argument :city, String 
       argument :state, String
@@ -60,6 +72,7 @@ module Types
       AidRequest.joins(:organization).where("city ILIKE ? AND state ILIKE ?", "%#{city}%", "%#{state}%")
     end
 
+    # All locations sorted by state, alphabetically
     field :locations, [Types::OrganizationType], null: false
 
     def locations 
