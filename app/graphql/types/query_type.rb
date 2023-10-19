@@ -21,7 +21,7 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    #Organization queries
+    # Organization details by ID
     field :organization, Types::OrganizationType, null: false do
       argument :id, ID
     end
@@ -30,6 +30,7 @@ module Types
       Organization.find(id)
     end
 
+    # Organizations for a given city+state
     field :organizations, [Types::OrganizationType], null: false do
       argument :city, String 
       argument :state, String
@@ -39,7 +40,7 @@ module Types
       Organization.where("city ILIKE ? AND state ILIKE ?", "%#{city}%", "%#{state}%")
     end
 
-    # AidRequests query
+    # AidRequests for a given city+state
     field :aid_requests, [Types::AidRequestType], null: false do
       argument :city, String 
       argument :state, String
@@ -49,6 +50,7 @@ module Types
       AidRequest.joins(:organization).where("city ILIKE ? AND state ILIKE ?", "%#{city}%", "%#{state}%")
     end
 
+    # All locations sorted by state, alphabetically
     field :locations, [Types::OrganizationType], null: false
 
     def locations 
