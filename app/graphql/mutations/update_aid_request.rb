@@ -10,7 +10,16 @@ module Mutations
     argument :status, String, required: false 
 
     def resolve(id:, **args)
+      begin
       aid_request = AidRequest.find(id)
+      rescue ActiveRecord::RecordNotFound => e
+        return GraphQL::ExecutionError.new("Invalid input: #{e.message}")
+      end
+
+      if args.values.any?(&:blank?)
+        return GraphQL::ExecutionError.new("Invalid input: #{args.select { |arg, value| value.blank? }.keys.join(', ')}")
+      end
+      
       aid_request.update(args)
       aid_request
     end
