@@ -78,10 +78,4 @@ describe "GraphQL `aidRequest` Request" do
       expect(aid_organization[:city]).to be_a String
     end
   end
-
-  describe "Sad Path" do
-    xit "returns error messages" do
-      
-    end
-  end
 end
