@@ -17,6 +17,20 @@ RSpec.describe Mutations::UpdateAidRequest do
         }
       }
     GQL
+
+    @multiple_attr_query = <<-GQL
+      mutation updateAidRequest($id: ID!, $language: String, $status: String) {
+        updateAidRequest(id: $id, language: $language, status: $status) {
+          id
+          status
+          language
+          organization {
+            name
+            id
+          }
+        }
+      }
+    GQL
   end
 
   describe "Happy Path" do
@@ -24,22 +38,23 @@ RSpec.describe Mutations::UpdateAidRequest do
       result = RefugeeAidBeSchema.execute(@query, variables: { id: @aid.id, status: "pending" })
       expect(result.dig("data", "updateAidRequest", "status")).to eq("pending")
     end
+
+    it "updates the status of the Aid Request" do
+      result = RefugeeAidBeSchema.execute(@multiple_attr_query, variables: { id: @aid.id, status: "pending", language: "French" })
+      expect(result.dig("data", "updateAidRequest", "status")).to eq("pending")
+      expect(result.dig("data", "updateAidRequest", "language")).to eq("French")
+    end
   end
 
   describe "Sad Path" do
-    xit "cannot update Aid Request with incorrect ID" do
+    it "cannot update Aid Request with incorrect ID" do
       result = RefugeeAidBeSchema.execute(@query, variables: { id: "not and ID!", status: "pending" })
-      expect(result.dig("errors", 0, "message")).to eq("Aid Request not found with ID: not and ID!")
+      expect(result.dig("errors", 0, "message")).to eq("Invalid input: Couldn't find AidRequest with 'id'=not and ID!")
     end
     
-    xit "cannot update Aid Request with incorrect status" do
-      result = RefugeeAidBeSchema.execute(@query, variables: { id: @aid.id, status: "potatoes" })
-      expect(result.dig("errors", 0, "message")).to eq("Invalid status: potatoes. Status must be 'pending', 'approved', or 'rejected'.")
+    it "cannot update Aid Request with blank parameters" do
+      result = RefugeeAidBeSchema.execute(@multiple_attr_query, variables: { id: @aid.id, language: "", status: ""})
+      expect(result.dig("errors", 0,  "message")).to eq("Invalid input: language, status")
     end 
-    
-    xit "cannot update Aid Request that status matches requested status" do
-      result = RefugeeAidBeSchema.execute(@query, variables: { id: @aid.id, status: "active" })
-      expect(result.dig("errors", 0, "message")).to eq("Aid Request status is already active")
-    end
   end
 end
