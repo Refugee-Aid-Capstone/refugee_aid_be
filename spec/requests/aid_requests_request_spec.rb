@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "GraphQL `aidRequest` Query Request" do
+describe "GraphQL `aidRequest` Request" do
   describe "Happy Path" do
     it "returns all AidRequests for a given city and state" do
       # Create Denver CO test data
@@ -54,8 +54,7 @@ describe "GraphQL `aidRequest` Query Request" do
       aid_requests = query_data[:aidRequests]
 
       expect(aid_requests).to be_an Array
-      expect(aid_requests.length).to be >= 10 
-      # Note: 10 confirmed aid requests created in /spec/rails_helper.rb, but one of the other two randomly generated orgs could be Denver.
+      expect(aid_requests.length).to be >= 10
 
       aid_request = aid_requests.first
 
