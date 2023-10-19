@@ -418,7 +418,6 @@ query ($city: String!, $state: String!) {
 type Organization {
   id: ID!
   name: String
-  city: String
   contactEmail: String
   contactPhone: String
   website: String
