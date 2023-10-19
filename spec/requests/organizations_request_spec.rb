@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "GraphQL Organization Request", type: :request do
+RSpec.describe "GraphQL Organizations Request", type: :request do
   before do
     @org_1 = create(:organization)
     @aid_1 = create_list(:aid_request, 3, organization: @org_1)
@@ -12,10 +12,10 @@ RSpec.describe "GraphQL Organization Request", type: :request do
   end
   
   describe "POST" do
-    it "gets an Organization by ID" do
-      get_one_organization_query = <<-GRAPHQL
-        query getOneOrg($id: ID!){
-          organization(id: $id) {
+    it "gets Organizations by city and state" do
+      get_organizations_by_city_state = <<-GRAPHQL
+        query getAllOrgs($city: String!, $state: String!) {
+          organizations(city: $city, state: $state) {
             id
             name
             contactPhone
@@ -44,10 +44,10 @@ RSpec.describe "GraphQL Organization Request", type: :request do
           }
         }
       GRAPHQL
-      
-      post graphql_path, params: { query: get_one_organization_query, variables: { id: @org_1.id } }
+
+      post graphql_path, params: { query: get_organizations_by_city_state, variables: { city: "Denver", state: "CO" } }
       json_response = JSON.parse(@response.body, symbolize_names: true)
-      expect(json_response.dig(:data, :organization, :aidRequests, 0, :organization, :name)).not_to be_blank
+      expect(json_response.dig(:data, :organizations, 0, :id)).not_to be_blank
     end
   end
 end

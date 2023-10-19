@@ -1,8 +1,50 @@
 require 'rails_helper'
 
-RSpec.describe "Organization Query" do
+RSpec.describe :organization do
+  before do
+    @org_1 = create(:organization)
+    @aid_1 = create_list(:aid_request, 3, organization: @org_1)
+    
+    @org_2 = create(:organization)
+    @aid_1 = create_list(:aid_request, 2, organization: @org_2)
+    
+    @orgs = create_list(:organization, 5, city: "Denver", state: "CO")
+  end
+  
   describe "Happy Path" do
     it "returns one Organization by ID" do
+      get_one_organization_query = <<-GRAPHQL
+        query getOneOrg($id: ID!){
+          organization(id: $id) {
+            id
+            name
+            contactPhone
+            contactEmail
+            streetAddress
+            website
+            city
+            state
+            zip
+            latitude
+            longitude
+            shareAddress
+            sharePhone
+            shareEmail
+            aidRequests {
+              id
+              organizationId
+              aidType
+              language
+              description
+              status
+              organization {
+                name
+              }
+            }
+          }
+        }
+      GRAPHQL
+      
       result = RefugeeAidBeSchema.execute(get_one_organization_query, variables: { id: @org_1.id })
 
       expect(result).to be_a(GraphQL::Query::Result)

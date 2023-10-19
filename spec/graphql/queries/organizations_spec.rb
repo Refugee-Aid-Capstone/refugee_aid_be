@@ -1,8 +1,50 @@
 require 'rails_helper'
 
-RSpec.describe "Organization Query" do
+RSpec.describe :organizations do
+  before do
+    @org_1 = create(:organization)
+    @aid_1 = create_list(:aid_request, 3, organization: @org_1)
+    
+    @org_2 = create(:organization)
+    @aid_1 = create_list(:aid_request, 2, organization: @org_2)
+    
+    @orgs = create_list(:organization, 5, city: "Denver", state: "CO")
+  end
+  
   describe "Happy Path" do
     it "returns Organizations by city and state" do
+      get_organizations_by_city_state = <<-GRAPHQL
+        query getAllOrgs($city: String!, $state: String!) {
+          organizations(city: $city, state: $state) {
+            id
+            name
+            contactPhone
+            contactEmail
+            streetAddress
+            website
+            city
+            state
+            zip
+            latitude
+            longitude
+            shareAddress
+            sharePhone
+            shareEmail
+            aidRequests {
+              id
+              organizationId
+              aidType
+              language
+              description
+              status
+              organization {
+                name
+              }
+            }
+          }
+        }
+      GRAPHQL
+      
       result = RefugeeAidBeSchema.execute(get_organizations_by_city_state, variables: { city: @org_1.city, state: @org_1.state })
 
       expect(result).to be_a(GraphQL::Query::Result)
