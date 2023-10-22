@@ -19,7 +19,7 @@ class Organization < ApplicationRecord
   validate :contact_info_shared
 
   def contact_info_given
-    unless !contact_phone.empty? || !contact_email.empty? || !street_address.empty?
+    unless (contact_phone && !contact_phone.empty?) || (contact_email && !contact_email.empty?) || (street_address && !street_address&.empty?)
       errors.add(:please_include, "either a phone number, email address, and/or street address")
     end
   end
