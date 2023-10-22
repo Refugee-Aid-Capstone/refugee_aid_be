@@ -21,6 +21,6 @@ class Organization < ApplicationRecord
   geocoded_by :address
 
   def address
-    [street, city, state, zip].compact.join(', ')
+    [street_address, city, state, zip].compact.join(', ')
   end
 end
