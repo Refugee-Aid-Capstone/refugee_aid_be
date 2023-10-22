@@ -2,13 +2,9 @@ class Organization < ApplicationRecord
   has_many :aid_requests
 
   validates :name, 
-            # :contact_phone, should be optional
-            # :contact_email, should be optional
-            # :street_address, should be optional
-            # :website, #should be optional
             :city,
             :state,
-            :zip,  #make city and state optional, and use zip/geocoder to fetch city and state when not provided?
+            :zip,
             :latitude,
             :longitude,
             presence: :true
@@ -23,13 +19,13 @@ class Organization < ApplicationRecord
   validate :contact_info_shared
 
   def contact_info_given
-    unless contact_phone || contact_email || street_address
+    unless !contact_phone.empty? || !contact_email.empty? || !street_address.empty?
       errors.add(:please_include, "either a phone number, email address, and/or street address")
     end
   end
 
   def contact_info_shared
-    unless share_address || share_phone || share_email
+    unless (street_address && share_address) || (contact_phone && share_phone) || (contact_email && share_email)
       errors.add(:please_share, "at least one form of contact so volunteers may get in touch with you.")
     end
   end
