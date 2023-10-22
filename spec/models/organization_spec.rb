@@ -3,10 +3,6 @@ require 'rails_helper'
 RSpec.describe Organization, type: :model do
   describe "validations" do
     it { should validate_presence_of(:name) }
-    # it { should validate_presence_of(:contact_phone) }
-    # it { should validate_presence_of(:contact_email) }
-    # it { should validate_presence_of(:street_address) }
-    # it { should validate_presence_of(:website) }
     it { should validate_presence_of(:city) }
     it { should validate_presence_of(:state) }
     it { should validate_presence_of(:zip) }
@@ -24,7 +20,7 @@ RSpec.describe Organization, type: :model do
       expect(org3.save).to eq(true)
 
       expect(org4.save).to eq(false)
-      expect(org4.errors.full_messages.to_sentence).to eq("Please include either a phone number, email address, and/or street address")
+      expect(org4.errors.full_messages.to_sentence).to eq("Please include either a phone number, email address, and/or street address and Please share at least one form of contact so volunteers may get in touch with you.")
     end
 
     it "validates at least one contact method is shared" do
