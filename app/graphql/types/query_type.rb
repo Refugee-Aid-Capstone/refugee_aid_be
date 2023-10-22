@@ -22,7 +22,7 @@ module Types
     # They will be entry points for queries on your schema.
 
     # Organization details by ID
-    field :organization, Types::OrganizationType, null: false do
+    field :organization, Types::OrganizationType, null: false, description: "Fetches an Organization by its ID." do
       argument :id, ID
     end
 
@@ -32,34 +32,27 @@ module Types
 
     # Organizations for a given city+state
     field :organizations, [Types::OrganizationType], null: false do
-      # argument :city, String, required: false 
-      # argument :state, String, required: false
-      # argument :latitude, Float, required: false, description: "A latitude coordinate."
-      # argument :longitude, Float, required: false, description: "A longitude coordinate." 
-      argument :radius, Integer, required: false, description: "(OPTIONAL) The search radius, in miles, from the provided `latitude` / `longitude`. Default value is 20 miles."
-      argument :location, String, required: false
+      argument :city, String, required: false, description: "The organization's city."
+      argument :state, String, required: false, description: "The organizaion's state, in a two-letter postal code."
+      argument :latitude, Float, required: false, description: "A latitude coordinate."
+      argument :longitude, Float, required: false, description: "A longitude coordinate." 
+      argument :radius, Integer, required: false, description: "The search radius, in miles, from the provided `latitude` / `longitude`. Default value is 20 miles."
+      argument :location, String, required: false, description: "A flexible search endpoint that accepts any kind of location data (address, city, state, etc.) to search for nearby organizations in our database. Uses an external location API for search functionality."
     end
 
     def organizations(radius: 20, **args)
-      data = Geocoder.search(args[:location]).first
-      # require "pry"; binding.pry
-      results = Organization.near(data.coordinates, radius)
-      require "pry"; binding.pry
-      results
-      # # require "pry"; binding.pry
-      # if args[:latitude] && args[:longitude]
-      #   coordinates = [args[:latitude], args[:longitude]]
-      #   # require "pry"; binding.pry
-      #   Organization.near(coordinates, radius)
-      # else
-      #   Organization.where("city ILIKE ? AND state ILIKE ?", "%#{args[:city]}%", "%#{args[:state]}%")
-      # end
+      if args[:latitude] && args[:longitude]
+        coordinates = [args[:latitude], args[:longitude]]
+        Organization.near(coordinates, radius)
+      elsif args[:city] || args[:state]
+        Organization.where("city ILIKE ? AND state ILIKE ?", "%#{args[:city]}%", "%#{args[:state]}%")
+      elsif args[:location]
+        geo_data = Geocoder.search(args[:location]).first
+        if !geo_data.nil?
+          Organization.near(geo_data.coordinates, radius)
+        end
+      end
     end
-
-    # def organizationsLatLon(latitude:, longitude:, radius:20)
-    #   coordinates = [latitude, longitude]
-    #   Organization.near(coordinates, radius)
-    # end
 
     # AidRequests for a given city+state
     field :aid_requests, [Types::AidRequestType], null: false do
