@@ -462,11 +462,63 @@ type AidRequest {
 
 **Refugee Aid** is a student project built in October, 2023 for the Backend Program of the [Turing School of Software and Design](https://turing.edu/).
 
-### Back End Team
-- **Ethan Black** ([Github](https://github.com/ethanrossblack) • [LinkedIn](https://www.linkedin.com/in/ethanrossblack/))
-- **Davis Weimer** ([Github]() • [LinkedIn]())
-- **Artemy Gibson** ([Github]() • [LinkedIn]())
+<table>
+    <tr>
+        <td> Ethan Black - Back-End Developer
+            <a href="https://www.linkedin.com/in/ethanrossblack/">LinkedIn</a> || 
+            <a href="https://github.com/ethanrossblack">GitHub</a> 
+        </td>
+    </tr>
+    <tr>
+        <td><img src="https://avatars.githubusercontent.com/u/8324716?v=4" alt="GitHub Avatar for Ethan Black" width="150"></td>
+    </tr>
+</table>
 
-### Front End Team
-- **Parvin Sattorova** ([Github]() • [LinkedIn]())
-- **Renee Pinna** ([Github]() • [LinkedIn]())
+<table>
+    <tr>
+        <td> Artemy Gibson - Back-End Developer
+            <a href="https://www.linkedin.com/in/artemy-gibson/">LinkedIn</a> || 
+            <a href="https://github.com/algibson1">GitHub</a> 
+        </td>
+    </tr>
+    <tr>
+        <td><img src="https://avatars.githubusercontent.com/u/123849704?v=4" alt="GitHub Avatar for Artemy Gibson" width="150"></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td> Davis Weimer - Back-End Developer
+            <a href="https://www.linkedin.com/in/davis-weimer/">LinkedIn</a> || 
+            <a href="https://github.com/DavisWeimer">GitHub</a> 
+        </td>
+    </tr>
+    <tr>
+        <td><img src="https://avatars.githubusercontent.com/u/128326999?v=4" alt="GitHub Avatar for Davis Weimer" width="150"></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td> Renee Pinna - Front-End Developer
+            <a href="https://www.linkedin.com/in/renee-pinna-9121b4279/">LinkedIn</a> || 
+            <a href="https://github.com/reneepinna">GitHub</a> 
+        </td>
+    </tr>
+    <tr>
+        <td><img src="https://avatars.githubusercontent.com/u/130389530?v=4" alt="GitHub Avatar for Renee Pinna" width="150"></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td> Parvin A. Sattorova - Front-End Developer
+            <a href="https://www.linkedin.com/in/parvin-sattorova-edwards-357526b3/">LinkedIn</a> || 
+            <a href="https://github.com/Sulton88Mehron90">GitHub</a> 
+        </td>
+    </tr>
+    <tr>
+        <td><img src="https://avatars.githubusercontent.com/u/119267809?v=4" alt="GitHub Avatar" width="150"></td>
+    </tr>
+</table>
+
