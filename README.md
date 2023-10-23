@@ -1,11 +1,20 @@
-# Refugee Aid
+<div>
+    <h1 style="color:red; display: inline;">
+      Refuge
+         <img src="https://github.com/Refugee-Aid-Capstone/refugee-aid-fe/blob/main/src/images/refuge.png" alt="refuge logo" width="105" style="margin-left: 5px; border-radius: 50%; vertical-align: middle;">
+    </h1>
+</div>
 
-Refugee Aid is an app that connects citizens in the United States with refugee aid organizations and camps.
+**Step into a realm of hope and connection with Refuge!** Inspired by the global effort to support displaced communities, this platform is crafted for those who aspire to bridge gaps and foster unity. Bringing together aid providers and seekers, **Refuge** stands as a testament to the power of solidarity in challenging times.
+
+Refuge - AidConnect/RefugeeAid emerges as a platform addressing the challenge of efficiently connecting aid workers and compassionate citizens with refugee camps or organizations. It ensures that assistance meets the refugees, asylees, and migrants' current and specific needs in an engaging, real-time feed. This initiative is a Capstone Project made in October, 2023 at the Turing School of Software and Design.
+
+This repository is the Backend API. You can view the Frontend application's repository [here](https://github.com/Refugee-Aid-Capstone/refugee-aid-fe) and interact with a live demo [here](https://refugee-aid-fe.vercel.app/).
+
 
 ## :clipboard: Table of Contents
 - [:hammer: Installation](#hammer-installation)
-- [:question: GraphQL Documentation](#question-graphql-documentation)
-  - [Queries](#queries)
+- [:writing_hand: GraphQL Queries](#writing_hand-graphql-queries)
   - [Types](#types)
 - [:people_holding_hands: Authors](#people_holding_hands-authors)
 
@@ -28,7 +37,7 @@ bundle exec rspec
 
 ---
 
-## ✍️ GraphQL Queries
+## :writing_hand: GraphQL Queries
 
 ### `organization`
 
