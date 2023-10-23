@@ -17,4 +17,10 @@ class Organization < ApplicationRecord
             :share_phone,
             :share_email,
             inclusion: [true,false]
+
+  geocoded_by :address
+
+  def address
+    [street_address, city, state, zip].compact.join(', ')
+  end
 end

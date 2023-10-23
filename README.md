@@ -39,6 +39,10 @@ bundle exec rspec
 
 ## :writing_hand: GraphQL Queries
 
+The Refuge API is written in [GraphQL](https://graphql.org/).
+
+All queries are done through a `POST` request to the `/graphql` endpoint.
+
 ### `organization`
 
 Returns details from a single `Organization` using its unique `id`.
@@ -294,6 +298,121 @@ query ($city: String!, $state: String!) {
   }
 }
 
+```
+</details>
+</td>
+</tr>
+</table>
+
+---
+
+### `organizationsLatLon`
+
+Retrieve all organiations within `r` miles of a given lat/lon. The default radius (`r`) is 20 miles.
+
+<table align="center">
+<tr>
+<th width="500px">
+<small>✍️ Example Query</small>
+</th>
+<th width="500px">
+<small>
+🧩 Example Variables
+</small>
+</th>
+</tr>
+<tr>
+<td>
+  
+```graphql
+query searchOrgsByLatLon($latitude: Float!, $longitude: Float!, $radius: Int) {
+  organizationsLatLon(latitude: $latitude, longitude: $longitude, radius: $radius) {
+    city
+    state
+  }
+}
+```
+
+</td>
+<td>
+
+```json
+{
+  "longitude": -104.984862,
+  "latitude": 39.7392364,
+  "radius": 5000
+}
+```
+</td>
+</tr>
+<tr>
+<th colspan="2">
+📦 <b>Example Response</b>
+</th>
+</tr>
+<tr>
+<td colspan="2">
+<details>
+<summary>
+🟢 Status <code>200</code> : Successful Response
+</summary>
+<br>
+  
+```json
+{
+  "data": {
+    "organization": {
+      "id": "2",
+      "name": "Dream Safe Haven",
+      "contactPhone": "1-676-635-1273",
+      "contactEmail": "breann.erdman@watsica-durgan.example",
+      "streetAddress": "85946 Miller Burg",
+      "website": "http://heaney.test/almeta",
+      "city": "Philadelphia",
+      "state": "PA",
+      "zip": "07501-9726",
+      "latitude": 40.16353072947562,
+      "longitude": -75.29320837398994,
+      "shareAddress": true,
+      "sharePhone": true,
+      "shareEmail": true,
+      "aidRequests": [
+        {
+          "id": "393",
+          "organizationId": 2,
+          "aidType": "language",
+          "language": "Javanese",
+          "description": "Dolorem vero maxime quisquam.",
+          "status": "pending"
+        },
+        {
+          "id": "891",
+          "organizationId": 2,
+          "aidType": "legal",
+          "language": "Tagalog",
+          "description": "Quo et voluptas amet.",
+          "status": "active"
+        },
+        {
+          "id": "1006",
+          "organizationId": 2,
+          "aidType": "language",
+          "language": "Romanian",
+          "description": "Ea ut qui quos.",
+          "status": "active"
+        },
+        {
+          "id": "2350",
+          "organizationId": 2,
+          "aidType": "medical",
+          "language": "Tagalog",
+          "description": "Molestiae cumque quisquam quis.",
+          "status": "active"
+        }
+      ]
+    }
+  }
+}
 ```
 </details>
 </td>
