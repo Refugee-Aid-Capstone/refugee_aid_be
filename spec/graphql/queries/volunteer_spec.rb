@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe :volunteer do 
   it "returns one volunteer by id" do
-    shelby = Volunteer.create!(first_name: "Shelby", last_name: "Jackson", email: "sjackson@example.com", id: 1)
+    Volunteer.create!(first_name: "Shelby", last_name: "Jackson", email: "sjackson@example.com", id: 1)
 
     query = <<~GraphQL
       query getVolunteer($id: ID!) {
