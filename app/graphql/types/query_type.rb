@@ -56,5 +56,13 @@ module Types
     def locations 
       Organization.select("city", "state").distinct.order("state", "city")
     end
+
+    field :volunteer, Types::VolunteerType, null: false do
+      argument :id, ID
+    end
+
+    def volunteer(id:)
+      Volunteer.find(id)
+    end
   end
 end
