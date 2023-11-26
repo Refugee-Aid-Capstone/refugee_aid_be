@@ -5,7 +5,7 @@ RSpec.describe Mutations::CreateAidRequest do
     @org = create(:organization)
   
     @query = <<~GraphQL
-      mutation createAidRequest($organizationId: Int!, $aidType: String!, $description: String) {
+      mutation createAidRequest($organizationId: Int, $aidType: String, $description: String) {
         createAidRequest(organizationId: $organizationId, aidType: $aidType, description: $description) {
           id
           aidType
@@ -19,13 +19,47 @@ RSpec.describe Mutations::CreateAidRequest do
         }
       }
     GraphQL
+
+    @no_type_query = <<~GraphQL
+      mutation createAidRequest($organizationId: Int, $description: String) {
+        createAidRequest(organizationId: $organizationId, description: $description) {
+          id
+          aidType
+          language
+          description
+          status
+          organization {
+            name
+            id
+          } 
+        }
+      }
+    GraphQL
+    
+    @no_org_query = <<~GraphQL
+      mutation createAidRequest($description: String) {
+        createAidRequest(description: $description) {
+          id
+          aidType
+          language
+          description
+          status
+          organization {
+            name
+            id
+          } 
+        }
+      }
+    GraphQL
+
   end
 
-  describe "Happy Path" do
+  describe "given valid input" do
     it "Creates an Aid Request for given Organization" do
       expect(@org.aid_requests.count).to eq(0)
 
       result = RefugeeAidBeSchema.execute(@query, variables: { organizationId: @org.id, aidType: "medical", description: "A random description" })
+      expect(@org.aid_requests.count).to eq(1)
 
       request = result.dig("data", "createAidRequest")
       expect(request.keys).to eq(["id", "aidType", "language", "description", "status", "organization"])
@@ -38,23 +72,31 @@ RSpec.describe Mutations::CreateAidRequest do
     end
   end
 
-  describe "Sad Path" do
-    xit "cannot create Aid Request with non-existing Organization ID" do
+  describe "given invalid input" do
+    it "cannot create Aid Request with invalid Organization ID" do
+      bad_id = @org.id - 1
+      bad_id_result = RefugeeAidBeSchema.execute(@query, variables: { organizationId: bad_id, aidType: "medical", description: "A random description" })
 
+      expect(bad_id_result.dig("errors", 0, "message")).to eq("Invalid input: Couldn't find Organization with 'id'=#{bad_id}")
+      expect(AidRequest.all).to eq([])
 
-      # result = RefugeeAidBeSchema.execute(@query, variables: { id: "not and ID!", status: "pending" })
-      # expect(result.dig("errors", 0, "message")).to eq("Invalid input: Couldn't find AidRequest with 'id'=not and ID!")
+      no_id_result = RefugeeAidBeSchema.execute(@no_org_query, variables: { description: "A random description" })
+      expect(no_id_result.dig("errors", 0, "message")).to eq("Invalid input: Couldn't find Organization without an ID")
+
+      expect(AidRequest.all).to eq([])
     end
     
-    xit "cannot create Aid Request with missing parameters" do
+    it "cannot create Aid Request with missing or blank parameters" do
+      blank_type_result = RefugeeAidBeSchema.execute(@query, variables: { organizationId: @org.id, aidType: "", description: "A random description" })
 
-      
-      # result = RefugeeAidBeSchema.execute(@multiple_attr_query, variables: { id: @aid.id, language: "", status: ""})
-      # expect(result.dig("errors", 0,  "message")).to eq("Invalid input: language, status")
+      expect(blank_type_result.dig("errors", 0, "message")).to eq("Validation failed: Aid type can't be blank")
+      expect(AidRequest.all).to eq([])
+
+
+      no_type_result = RefugeeAidBeSchema.execute(@no_type_query, variables: { organizationId: @org.id, description: "A random description" })
+      expect(no_type_result.dig("errors", 0, "message")).to eq("Validation failed: Aid type can't be blank")
+
+      expect(AidRequest.all).to eq([])
     end 
-
-    xit "cannot create Aid Request with blank parameters" do
-
-    end
   end
 end
