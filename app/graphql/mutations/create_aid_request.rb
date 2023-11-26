@@ -3,20 +3,20 @@
 module Mutations
   class CreateAidRequest < BaseMutation
     type Types::AidRequestType
-    # argument :id, ID
-    argument :organization_id, Integer
-    argument :aid_type, String
+    argument :organization_id, Integer, required: false
+    argument :aid_type, String, required: false
     argument :language, String, required: false
     argument :description, String, required: false
-    # argument :status, String, required: false 
 
-
-    def resolve(**args)
-      # begin 
-        aid_request = AidRequest.create!(args)
-      # rescue  
-      # end
-      # raise GraphQL::ExecutionError.new "Error creating aid_request", extensions: aid_request.errors.to_hash unless aid_request.save
+    def resolve(organization_id: nil, **args)
+      begin 
+        organization = Organization.find(organization_id)
+        organization.aid_requests.create!(args)
+      rescue ActiveRecord::RecordNotFound => error
+        return GraphQL::ExecutionError.new("Invalid input: #{error.message}")
+      rescue ActiveRecord::RecordInvalid => error
+        return GraphQL::ExecutionError.new("#{error.message}")
+      end
     end
   end
 end
