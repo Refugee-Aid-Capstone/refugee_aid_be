@@ -48,3 +48,5 @@ CSV.foreach('db/data/aid_requests_gen.csv', headers: true) do |row|
 end
 
 puts "Aid Requests CSV loaded successfully."
+
+Volunteer.create(first_name: "Shelby", last_name: "Jackson", email: "sjackson@example.com", id: 1)
