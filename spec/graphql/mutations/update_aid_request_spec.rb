@@ -39,7 +39,7 @@ RSpec.describe Mutations::UpdateAidRequest do
       expect(result.dig("data", "updateAidRequest", "status")).to eq("pending")
     end
 
-    it "updates the status of the Aid Request" do
+    it "updates the status and language of the Aid Request" do
       result = RefugeeAidBeSchema.execute(@multiple_attr_query, variables: { id: @aid.id, status: "pending", language: "French" })
       expect(result.dig("data", "updateAidRequest", "status")).to eq("pending")
       expect(result.dig("data", "updateAidRequest", "language")).to eq("French")
