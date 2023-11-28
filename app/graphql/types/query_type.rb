@@ -64,5 +64,14 @@ module Types
     def volunteer(id:)
       Volunteer.find(id)
     end
+
+    field :messages, [Types::MessageType], null: false do
+      argument :volunteer_id, Integer
+      argument :organization_id, Integer
+    end
+
+    def messages(volunteer_id:, organization_id:)
+      Message.where(volunteer_id: volunteer_id, organization_id: organization_id).order(:created_at)
+    end
   end
 end
