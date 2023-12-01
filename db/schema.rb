@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_25_221315) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_28_171806) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,6 +23,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_221315) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_aid_requests_on_organization_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "volunteer_id", null: false
+    t.bigint "organization_id", null: false
+    t.string "message_body"
+    t.integer "sender"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_messages_on_organization_id"
+    t.index ["volunteer_id"], name: "index_messages_on_volunteer_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -52,4 +63,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_221315) do
   end
 
   add_foreign_key "aid_requests", "organizations"
+  add_foreign_key "messages", "organizations"
+  add_foreign_key "messages", "volunteers"
 end
